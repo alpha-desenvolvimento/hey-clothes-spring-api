@@ -10,24 +10,39 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_user")
-public class User implements Serializable{
-	
+public class User implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String email;
-	
+	private String password;
+	private String token;
+	private String status;
+
 	public User() {
 	}
 
-	public User(Long id, String name, String email) {
+	public User(Long id, String name, String email, String password, String token, String status) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
+		this.password = password;
+		this.token = token;
+		this.status = status;
+	}
+	
+	
+
+	public User(String name, String token, String status) {
+		super();
+		this.name = name;
+		this.token = token;
+		this.status = status;
 	}
 
 	public Long getId() {
@@ -54,33 +69,34 @@ public class User implements Serializable{
 		this.email = email;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+	public String getPassword() {
+		return password;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
+	public void setPassword(String password) {
+		this.password = password;
 	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	
-	
-	
-	
-	
+
 }

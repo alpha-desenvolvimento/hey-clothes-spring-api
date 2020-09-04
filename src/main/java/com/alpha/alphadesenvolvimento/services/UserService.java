@@ -28,6 +28,12 @@ public class UserService {
 	public User insert(User obj) {
 		return repository.save(obj);
 	}
+	
+	public User findByEmail(String email) {
+		Optional<User> objEmail = repository.findByEmail(email);
+		return objEmail.get();
+		
+	}
 
 	
 }
