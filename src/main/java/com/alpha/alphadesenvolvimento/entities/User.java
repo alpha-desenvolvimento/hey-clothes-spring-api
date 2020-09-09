@@ -2,6 +2,7 @@ package com.alpha.alphadesenvolvimento.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,29 +21,20 @@ public class User implements Serializable {
 	private String name;
 	private String email;
 	private String password;
-	private String token;
-	private String status;
+	
+	@Column(nullable = true)
+	private int ativo;
 
 	public User() {
 	}
 
-	public User(Long id, String name, String email, String password, String token, String status) {
+	public User(Long id, String name, String email, String password, int ativo) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
-		this.token = token;
-		this.status = status;
-	}
-	
-	
-
-	public User(String name, String token, String status) {
-		super();
-		this.name = name;
-		this.token = token;
-		this.status = status;
+		this.ativo = ativo;
 	}
 
 	public Long getId() {
@@ -77,26 +69,58 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public String getToken() {
-		return token;
+
+	public int getAtivo() {
+		return ativo;
 	}
 
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
+	public void setAtivo(int ativo) {
+		this.ativo = ativo;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	public class UserResponse{
+		private String name;
+		private String token;
+		private String status;
+		
+		
 
+		public UserResponse() {
+			super();
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getToken() {
+			return token;
+		}
+
+		public void setToken(String token) {
+			this.token = token;
+		}
+
+		public String getStatus() {
+			return status;
+		}
+
+		public void setStatus(String status) {
+			this.status = status;
+		}
+		
+		
+		
+	}
+	
 	
 
 }

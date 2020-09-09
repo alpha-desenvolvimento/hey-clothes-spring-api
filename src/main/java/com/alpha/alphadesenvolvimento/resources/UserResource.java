@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alpha.alphadesenvolvimento.entities.User;
+import com.alpha.alphadesenvolvimento.entities.User.UserResponse;
 import com.alpha.alphadesenvolvimento.entities.Usuario;
 import com.alpha.alphadesenvolvimento.services.UserService;
 
@@ -34,31 +35,24 @@ public class UserResource {
 	public ResponseEntity<User> findById(@PathVariable Long id){
 		User obj = service.findById(id);
 		
-		return ResponseEntity.ok().body(obj);
-		
+		return ResponseEntity.ok().body(obj);	
 	}
 	
 	@PostMapping(value = "/save")
 	public ResponseEntity<User> insert(@RequestBody User obj){
 		
 		obj = service.insert(obj);
-		return ResponseEntity.ok().body(obj);
+		return ResponseEntity.ok().body(obj); 
 		
 	}
 	
 	@PostMapping
-	public HashMap<String, Object> validateEmail(@RequestParam(name = "email") String email,
+	public ResponseEntity<UserResponse> login(@RequestParam(name = "email") String email,
 			@RequestParam(name = "password") String password) {
-		User obj = service.findByEmail(email);
 		
-		User objUser = new User(obj.getName(), obj.getToken(),obj.getStatus());
+		UserResponse response = service.validateEmail(email, password);
 		
-		HashMap<String, Object> map = new HashMap<>();
-	    map.put("Nome", obj.getName());
-	    map.put("Token", obj.getToken());
-	    map.put("Status", obj.getStatus());
-	    
-	    return map;
+		return ResponseEntity.ok().body(response);
 		
 	}
 
