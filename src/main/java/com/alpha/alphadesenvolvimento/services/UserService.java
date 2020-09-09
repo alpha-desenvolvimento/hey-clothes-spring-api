@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 
 import com.alpha.alphadesenvolvimento.entities.User;
 import com.alpha.alphadesenvolvimento.entities.User.UserResponse;
+
+import com.alpha.alphadesenvolvimento.entities.response.ServiceResponse;
+
 import com.alpha.alphadesenvolvimento.repositories.UserRepository;
 
 @Component
@@ -37,28 +40,45 @@ public class UserService {
 		
 	}
 	
-	public UserResponse validateEmail(String email, String password) {
+	public JsonResponse validateEmail(String email, String password) {
 		
 		User obj = findByEmail(email);
+		
 		UserResponse response = obj.new UserResponse();
 		
+		ServiceResponse meta = new ServiceResponse();
 		
+		JsonResponse json = meta.new JsonResponse();
 		
 		if(obj.getPassword().equals(password)) {
-			
 			
 			response.setName(obj.getName());
 		    response.setToken("tokenqualquer");
 		    response.setStatus("200");
+		    
+		    meta.setService("/api/user");
+		    meta.setError(null);
+		    meta.setStatus(200);
+		    
+		    json.setMeta(meta);
+		    json.setData(response);
+		    
 			
-		    return response; 
+		    return json; 
 		} else {
 			response.setName("Usuário Inválido");
 		    response.setToken("invalido");
 		    response.setStatus("401");
 			
-		    return response; 
+		    meta.setService("/api/user");
+		    meta.setError("ERRO GENERICO");
+		    meta.setStatus(401);
+		    
+		    json.setMeta(meta);
+		    json.setData(response);
+		    return json;
 		}
+		
 	}
 
 	

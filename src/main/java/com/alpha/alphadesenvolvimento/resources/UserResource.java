@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alpha.alphadesenvolvimento.entities.User;
 import com.alpha.alphadesenvolvimento.entities.User.UserResponse;
-import com.alpha.alphadesenvolvimento.entities.Usuario;
+import com.alpha.alphadesenvolvimento.entities.response.ServiceResponse;
+import com.alpha.alphadesenvolvimento.entities.response.ServiceResponse.JsonResponse;
 import com.alpha.alphadesenvolvimento.services.UserService;
 
 @RestController
@@ -32,10 +33,14 @@ public class UserResource {
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<User> findById(@PathVariable Long id){
+	public ResponseEntity<JsonResponse> findById(@PathVariable Long id){
 		User obj = service.findById(id);
+		ServiceResponse meta = new ServiceResponse();
+		JsonResponse response = meta.new JsonResponse();
 		
-		return ResponseEntity.ok().body(obj);	
+		response.setData(obj);
+		
+		return ResponseEntity.ok().body(response);	
 	}
 	
 	@PostMapping(value = "/save")
@@ -47,10 +52,10 @@ public class UserResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<UserResponse> login(@RequestParam(name = "email") String email,
+	public ResponseEntity<JsonResponse> login(@RequestParam(name = "email") String email,
 			@RequestParam(name = "password") String password) {
 		
-		UserResponse response = service.validateEmail(email, password);
+		JsonResponse response = service.validateEmail(email, password);
 		
 		return ResponseEntity.ok().body(response);
 		
